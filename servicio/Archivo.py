@@ -1,9 +1,9 @@
 from utils import debug_print
 
-ARCHIVO = "Estructura"
+ARCHIVO = "Archivo"
 
 
-class Estructura:
+class Archivo:
     def __init__(self, centros, puntos):
         debug_print(ARCHIVO, "__init__", str(
             {"centros": centros, "puntos": puntos}))
@@ -15,7 +15,7 @@ class Estructura:
         print("Puntos de venta:", self.puntos)
 
     @staticmethod
-    def desde_archivo(f):
+    def procesar(f):
         # f = open("instrucciones.txt", "r")
         lista = []
         centros = []
@@ -62,4 +62,4 @@ class Estructura:
                     j += 1
 
             i += 1
-        return Estructura(centros, puntos)
+        return Archivo(centros, puntos)

@@ -1,122 +1,46 @@
 from flask import jsonify
 from utils import debug_print
-from Estructura import Estructura
+from Archivo import Archivo
+from PuntoVenta import PuntoVenta
+from CentroDistribucion import CentroDistribucion
+from Ruta import Ruta
 
 ARCHIVO = "servicios"
 
 
 def leer_y_procesar_archivo(archivo):
     debug_print(ARCHIVO, "leer_y_procesar_archivo", str(archivo))
-    estructura = Estructura.desde_archivo(archivo.split("\n"))
+    procesado = Archivo.procesar(archivo.split("\n"))
+
+    puntos = []
+    puntos.append(PuntoVenta(1, (3, 5)))
+    puntos.append(PuntoVenta(2, (82, 12)))
+    puntos.append(PuntoVenta(3, (34, 72)))
+
+    centros = []
+    centros.append(CentroDistribucion(1, (22, 2)))
+    centros.append(CentroDistribucion(2, (152, 45)))
+
     return jsonify({
-        "puntosVenta": [
-            {
-                "id": 1,
-                "coordenadas": {
-                    "x": 3,
-                    "y": 5,
-                }
-            },
-            {
-                "id": 2,
-                "coordenadas": {
-                    "x": 82,
-                    "y": 12,
-                }
-            },
-            {
-                "id": 3,
-                "coordenadas": {
-                    "x": 34,
-                    "y": 72,
-                }
-            }
-        ],
-        "centrosDistribucion": [
-            {
-                "id": 1,
-                "coordenadas": {
-                    "x": 22,
-                    "y": 2,
-                }
-            },
-            {
-                "id": 2,
-                "coordenadas": {
-                    "x": 152,
-                    "y": 45,
-                }
-            }
-        ]
+        "puntosVenta": PuntoVenta.lista_to_dict(puntos),
+        "centrosDistribucion": CentroDistribucion.lista_to_dict(centros)
     })
 
 
 def obtener_hoja_de_ruta(json):
     debug_print(ARCHIVO, "obtener_hoja_de_ruta", str(json))
+
+    puntos1 = []
+    puntos1.append(PuntoVenta(3, (34, 72), 400))
+    puntos1.append(PuntoVenta(2, (82, 12), 200))
+
+    puntos2 = []
+    puntos2.append(PuntoVenta(1, (3, 5), 1000))
+
+    rutas = []
+    rutas.append(Ruta("Camion 1", CentroDistribucion(1, (22, 2)), puntos1))
+    rutas.append(Ruta("Camion 3", CentroDistribucion(2, (152, 45)), puntos2))
+
     return jsonify({
-        "rutas": [
-            {
-                "camion": "Camión 1",
-                "centroDistribucion": 1,
-                "productos": 600,
-                "ruta": [
-                    {
-                        "id": 1,
-                        "esCentroDistribucion": True,
-                        "productos": None,
-                        "coordenadas": {
-                            "x": 152,
-                            "y": 45,
-                        }
-                    },
-                    {
-                        "id": 3,
-                        "esCentroDistribucion": False,
-                        "productos": 400,
-                        "coordenadas": {
-                            "x": 34,
-                            "y": 72,
-                        }
-                    },
-                    {
-                        "id": 2,
-                        "esCentroDistribucion": False,
-                        "productos": 200,
-                        "coordenadas": {
-                            "x": 82,
-                            "y": 12,
-                        }
-                    },
-
-                ],
-            },
-            {
-                "camion": "Camión 2",
-                "productos": 1000,
-                "centroDistribucion": 2,
-                "ruta": [
-                    {
-                        "id": 2,
-                        "esCentroDistribucion": True,
-                        "productos": None,
-                        "coordenadas": {
-                            "x": 22,
-                            "y": 2,
-                        }
-                    },
-                    {
-                        "id": 1,
-                        "esCentroDistribucion": False,
-                        "productos": 1000,
-                        "coordenadas": {
-                            "x": 3,
-                            "y": 5,
-                        }
-                    }
-
-
-                ],
-            }
-        ]
-
+        "rutas": Ruta.lista_to_dict(rutas)
     })
