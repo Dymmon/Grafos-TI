@@ -13,10 +13,6 @@ class Archivo:
         self.centros = centros
         self.puntos = puntos
 
-    def mostrar(self):
-        print("Centros de distribución:", self.centros)
-        print("Puntos de venta:", self.puntos)
-
     @staticmethod
     def procesar(archivo):
         # f = open("instrucciones.txt", "r")
