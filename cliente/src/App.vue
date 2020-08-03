@@ -1,56 +1,46 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+  <div
+    style="
+    height: 100%;"
+  >
+    <div style="padding: 30px; width: calc(100% - 50px); float: right">
+      <div style="display: flex; justify-content: space-between;">
+      <div class="text-center">
+        <v-btn
+        rounded
+        flat
+        outlined
+        color="primary"
+          >Autómata 2</v-btn
+        >
+      </div>
+        <a href="https://github.com/Dymmon/Grafos-TI">
+        <v-btn icon color="primary">
+        <v-icon>github-circle</v-icon>
+        </v-btn>
+        </a>
       </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
-  </v-app>
+      <div class="d-flex" style="width: 100%;">
+        <div
+          class="card"
+          style="width: 100%; height: calc(100vh - 80px - 45px); border-radius: 10px;"
+        >
+          <router-view />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+// import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    // HelloWorld,
   },
 
   data: () => ({
