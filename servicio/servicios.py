@@ -12,19 +12,7 @@ def leer_y_procesar_archivo(archivo):
     debug_print(ARCHIVO, "leer_y_procesar_archivo", str(archivo))
     procesado = Archivo.procesar(archivo.split("\n"))
 
-    puntos = []
-    puntos.append(PuntoVenta(1, (3, 5)))
-    puntos.append(PuntoVenta(2, (82, 12)))
-    puntos.append(PuntoVenta(3, (34, 72)))
-
-    centros = []
-    centros.append(CentroDistribucion(1, (22, 2)))
-    centros.append(CentroDistribucion(2, (152, 45)))
-
-    return jsonify({
-        "puntosVenta": PuntoVenta.lista_to_dict(puntos),
-        "centrosDistribucion": CentroDistribucion.lista_to_dict(centros)
-    })
+    return jsonify(procesado)
 
 
 def obtener_hoja_de_ruta(json):
