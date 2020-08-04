@@ -1,6 +1,6 @@
 <template>
-  <div class="fill-height d-flex align-center justify-center">
-    <v-col align="center" justify="space-around" class="fill-height">
+  <div class="fill-height d-flex align-center justify-space-between">
+    <v-col align="center">
       <h3>Ingresar archivo</h3>
       <v-file-input
         v-model="archivo"
@@ -14,7 +14,7 @@
       </v-file-input>
       <v-row align="center" justify="space-between">
         <v-btn outlined rounded @click="onCancelar">Cancelar</v-btn>
-        <v-btn outlined rounded @click="continuar">Siguiente</v-btn>
+        <v-btn outlined rounded @click="continuar" :disabled="deshabilitado">Siguiente</v-btn>
       </v-row>
     </v-col>
   </div>
@@ -28,9 +28,15 @@ export default {
   data() {
     return {
       archivo: null,
+      deshabilitado: true,
     };
   },
   watch: {
+    archivo(){
+      if(this.archivo){
+        this.deshabilitado = false;
+      }
+    },
   },
   methods: {
     continuar() {

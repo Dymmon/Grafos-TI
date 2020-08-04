@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <div
     style="
     height: 100%;"
@@ -31,6 +32,7 @@
       </div>
     </div>
   </div>
+</v-app>
 </template>
 
 <script>

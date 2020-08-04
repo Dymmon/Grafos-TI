@@ -23,7 +23,7 @@
         <v-row>
           <v-col cols="3"><h3>CD{{centro.id}}</h3></v-col>
           <v-col cols="4">
-            <v-select :items="camiones" item-text="nombre" dense outlined></v-select>
+            <v-select :items="camiones" :item-text="camiones.nombre" dense outlined></v-select>
           </v-col>
         </v-row>
         </div>
