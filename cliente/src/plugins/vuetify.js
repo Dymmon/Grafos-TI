@@ -1,25 +1,31 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
-import es from 'vuetify/es5/locale/es';
+import Vue from "vue";
+import Vuetify from "vuetify/lib";
+import es from "vuetify/es5/locale/es";
+import colors from 'vuetify/lib/util/colors'
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
-    lang: {
-        locales: {es},
-        current: 'es',
-    },
-    icons: {
-        iconFont: 'mdi',
-    },
-    theme: {
-        themes: {
-            light: {
-                primary: '#46c292',
-                secondary: '#eddf8c',
-                accent: '#82BC00',
-                error: '#b71c1c',
-              },
+const vuetify = new Vuetify({
+  lang: {
+    locales: { es },
+    current: "es",
+  },
+  icons: {
+    iconFont: "mdi",
+  },
+  theme: {
+    themes: {
+        light: {
+          primary: colors.purple,
+          secondary: colors.grey.darken1,
+          accent: colors.shades.black,
+          error: colors.red.accent3,
         },
-    },
+        dark: {
+          primary: colors.blue.lighten3,
+        },
+      },
+  },
 });
+
+export default vuetify;
