@@ -60,16 +60,18 @@ def leer_archivo():
         i += 1
     return centros, puntos
 
+
 def dist_total(camino):
-    i=1
-    recorridos=[]
+    i = 1
+    recorridos = []
     recorridos.append(camino[0])
-    total=0
-    while(i<len(camino)):
-        total+=distancia(recorridos[i-1],camino[i])
+    total = 0
+    while(i < len(camino)):
+        total += distancia(recorridos[i-1], camino[i])
         recorridos.append(camino[i])
-        i+=1
+        i += 1
     return total
+
 
 def mas_cercano(inicio, recorridos, puntos):
     first = True
@@ -87,67 +89,71 @@ def mas_cercano(inicio, recorridos, puntos):
         recorridos.append(siguiente)
     return siguiente
 
-def candidato(disponibles,maximo,inicio):
-    orden=[]
-    recorridos=[]
+
+def candidato(disponibles, maximo, inicio):
+    orden = []
+    recorridos = []
     orden.append(inicio)
     recorridos.append(inicio)
-    cant=inicio[2]
-    disp=[]
-    i=0
-    while(i<len(disponibles)):
+    cant = inicio[2]
+    disp = []
+    i = 0
+    while(i < len(disponibles)):
         if(disponibles[i] not in recorridos):
             disp.append(disponibles[i])
-        i+=1
+        i += 1
     while(cant < maximo):
-        a=mas_cercano(recorridos[len(recorridos)-1],recorridos,disp)
+        a = mas_cercano(recorridos[len(recorridos)-1], recorridos, disp)
         if(a != None):
-            cant+=recorridos[len(recorridos)-1][2]
-        if(a==None):
-            cant+=maximo
-        if(cant<=maximo):
+            cant += recorridos[len(recorridos)-1][2]
+        if(a == None):
+            cant += maximo
+        if(cant <= maximo):
             if(a not in orden):
                 orden.append(a)
-            i=0
-            disp=[]
-            while(i<len(disponibles)):
+            i = 0
+            disp = []
+            while(i < len(disponibles)):
                 if(disponibles[i] not in recorridos):
                     disp.append(disponibles[i])
-                i+=1
-    a=dist_total(orden)
-    return orden,a
+                i += 1
+    a = dist_total(orden)
+    return orden, a
 
-def seleccion_pv(maximo,recorridos,puntos_venta):
-    disponibles=[]
+
+def seleccion_pv(maximo, recorridos, puntos_venta):
+    disponibles = []
     for i in puntos_venta:
         if(i not in recorridos and i != None):
             disponibles.append(i)
     if(disponibles == []):
         return None
-    i=0
-    aux_ruta=[]
-    aux_largo=0
-    first=True
-    ruta=[]
-    largo=0
-    while(i<len(disponibles)):
-        aux_ruta,aux_largo=candidato(disponibles,maximo,disponibles[i])
-        if(not first and aux_largo>largo):
-            ruta=aux_ruta
-            largo=aux_largo
+    i = 0
+    aux_ruta = []
+    aux_largo = 0
+    first = True
+    ruta = []
+    largo = 0
+    while(i < len(disponibles)):
+        aux_ruta, aux_largo = candidato(disponibles, maximo, disponibles[i])
+        if(not first and aux_largo > largo):
+            ruta = aux_ruta
+            largo = aux_largo
         if(first):
-            ruta=aux_ruta
-            largo=aux_largo
-        i+=1
+            ruta = aux_ruta
+            largo = aux_largo
+        i += 1
     return ruta
+
 
 def buscar_id(centros, cent):
     i = 0
     while(i < len(centros)):
-        if(centros[i]!=None):
-            if(centros[i][0]==cent[0] and centros[i][1] == cent[1]):
+        if(centros[i] != None):
+            if(centros[i][0] == cent[0] and centros[i][1] == cent[1]):
                 return i
         i += 1
+
 
 def distancia(A, B):
     aux = (((A[0]-B[0])*(A[0]-B[0])) + ((A[1]-B[1])*(A[1]-B[1])))
@@ -155,16 +161,15 @@ def distancia(A, B):
     return aux
 
 
-
-
-
-def crear_ruta(camion, centros,cant_puntos,recorridos,puntos):
+def crear_ruta(camion, centros, cant_puntos, recorridos, puntos):
     # Técnica matemática "Programación dinámica"
-    camion.ptos_venta=seleccion_pv(camion.productos,recorridos,cant_puntos)
+    camion.ptos_venta = seleccion_pv(camion.productos, recorridos, cant_puntos)
     orden = []
-    orden.append("Centro de distribucion " +str(buscar_id(centros, camion.centro_dist)))
-    i=0
-    while(i< len(camion.ptos_venta)):
-        orden.append("Punto de venta " + str(buscar_id(puntos,camion.ptos_venta[i])))
-        i+=1
+    orden.append("Centro de distribucion " +
+                 str(buscar_id(centros, camion.centro_dist)))
+    i = 0
+    while(i < len(camion.ptos_venta)):
+        orden.append("Punto de venta " +
+                     str(buscar_id(puntos, camion.ptos_venta[i])))
+        i += 1
     orden.append("A mimir señor camion")
