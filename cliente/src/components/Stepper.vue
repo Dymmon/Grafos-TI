@@ -1,6 +1,6 @@
 <template>
-  <section class="fill-height">
-    <v-stepper class="fill-height" alt-labels="true" style="padding: 10px 0 10px 0;" v-model="pasoActual">
+  <div style="height: calc(100vh - 150px )">
+    <v-stepper class="fill-height" :alt-labels="true" style="padding: 0px 0 20px 0;" v-model="pasoActual">
       <v-stepper-header>
         <v-stepper-step step="1" :complete="pasoActual > 1">Archivo</v-stepper-step>
         <v-divider></v-divider>
@@ -10,21 +10,23 @@
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <input-archivo></input-archivo>
+          <input-archivo :onCancelar="()=>{pasoActual = 1}" :onSiguiente="()=>{pasoActual = 2}"></input-archivo>
         </v-stepper-content>
         <v-stepper-content step="2">
-          
+          <centro-distribucion :onDevolverse="()=>{pasoActual = 1}" :onSiguiente="()=>{pasoActual = 3}"></centro-distribucion>
         </v-stepper-content>
         <v-stepper-content step="3">
-          
+          <punto-venta :onGuardar="onGuardar" :onDevolverse="()=>{pasoActual = 2}"></punto-venta>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-  </section>
+  </div>
 </template>
 
 <script>
 import InputArchivo from "./InputArchivo";
+import CentroDistribucion from "./CentroDistribucion";
+import PuntoVenta from "./PuntoVenta";
 
 export default {
   name: "Stepper",
@@ -32,11 +34,13 @@ export default {
     "onFinalizar"
   ],
   components: {
-      InputArchivo
+      InputArchivo,
+      CentroDistribucion,
+      PuntoVenta
   },
   data() {
     return {
-      pasoActual: 0
+      pasoActual: 1
     };
   },
   watch: {
@@ -44,7 +48,9 @@ export default {
           console.log("PASO ACTUAL: ", this.pasoActual);
       }
   },
-  mounted() {},
+  mounted() {
+    this.pasoActual = 1;
+  },
   computed: {
   }
 };

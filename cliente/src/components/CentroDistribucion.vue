@@ -3,17 +3,16 @@
   <v-col align="center" justify="space-around" class="fill-height">
     <h3>Ingresar archivo</h3>
     <v-file-input
-      v-model="archivo"
+      v-model="files"
       color="deep-purple accent-4"
       placeholder="Seleccionar archivo"
       prepend-icon="mdi-paperclip"
       outlined
-      show-size
-      accept=".txt"
+      :show-size="1000"
     >
     </v-file-input>
     <v-row align="center" justify="space-between">
-    <v-btn outlined rounded @click="onCancelar">Cancelar</v-btn>
+    <v-btn outlined rounded @click="devolverse">Atrás</v-btn>
     <v-btn outlined rounded @click="continuar">Siguiente</v-btn>
     </v-row>
   </v-col>
@@ -21,26 +20,20 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "input-archivo",
-  props: ["onSiguiente", "onCancelar"],
+  props: ["onSiguiente", "onDevolverse"],
   data() {
     return {
-      archivo: null,
+      files: null,
     };
   },
-  watch: {
-      archivo(){console.log("ARCHIVO: ", this.archivo);}
-  },
   methods: {
+      devolverse(){
+          this.onDevolverse();
+      },
       continuar(){
-        //   let formData = new FormData();
-        //   formData.append('archivo', this.archivo);
-        //   console.log("AAA", formData.getAll('archivo'));
-        // axios.post(this.$apiUrl)
-        
-        //   this.onSiguiente();
+          this.onSiguiente();
       }
   }
 };
