@@ -11,6 +11,10 @@ class PuntoVenta:
         self.coordenadas = coordenadas
         self.productos = productos
 
+    @staticmethod
+    def from_json(json):
+        return PuntoVenta(json["id"], (json["coordenadas"]["x"], json["coordenadas"]["y"]), json["productos"])
+
     def to_dict(self):
         return {
             "id": self.id,

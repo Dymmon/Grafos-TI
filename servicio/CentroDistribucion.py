@@ -10,6 +10,10 @@ class CentroDistribucion:
         self.id = id
         self.coordenadas = coordenadas
 
+    @staticmethod
+    def from_json(json):
+        return CentroDistribucion(json["id"], (json["coordenadas"]["x"], json["coordenadas"]["y"]))
+
     def to_dict(self):
         return {
             "id": self.id,
