@@ -16,18 +16,20 @@ class Ruta:
         self.punto_actual = centro
 
     # Calcula la cantidad de productos entregados en esta ruta
-
     def cantidad_productos(self):
+        debug_print(ARCHIVO, "cantidad_productos")
         suma = 0
         for punto in self.puntos:
             suma += punto.productos
         return suma
 
     def puede_seguir(self):
+        debug_print(ARCHIVO, "puede_seguir")
         return self.capacidad_restante > 0
 
     # Convierte el objeto en un diccionario
     def to_dict(self):
+        debug_print(ARCHIVO, "to_dict")
         return {
             "camion": self.camion,
             "capacidadRestante": self.capacidad_restante,
@@ -40,6 +42,7 @@ class Ruta:
     # Convierte una lista de objetos en una lista de diccionarios
     @staticmethod
     def lista_to_dict(rutas):
+        debug_print(ARCHIVO, "lista_to_dict")
         lista = []
         for ruta in rutas:
             print(ruta.to_dict())
@@ -49,6 +52,7 @@ class Ruta:
     # Obtiene un objeto por ID desde una lista de objetos
     @staticmethod
     def get_by_id(id, centros):
+        debug_print(ARCHIVO, "get_by_id")
         for centro in centros:
             if (centro.id == id):
                 return centro

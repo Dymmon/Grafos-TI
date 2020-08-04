@@ -13,9 +13,11 @@ class PuntoVenta:
 
     @staticmethod
     def from_json(json):
+        debug_print(ARCHIVO, "__init__", json)
         return PuntoVenta(json["id"], (json["coordenadas"]["x"], json["coordenadas"]["y"]), json["productos"])
 
     def to_dict(self):
+        debug_print(ARCHIVO, "to_dict")
         return {
             "id": self.id,
             "esCentroDistribucion": False,
@@ -28,6 +30,7 @@ class PuntoVenta:
 
     @staticmethod
     def lista_to_dict(puntos):
+        debug_print(ARCHIVO, "lista_to_dict", {"puntos": puntos})
         lista = []
         for punto in puntos:
             lista.append(punto.to_dict())
@@ -35,6 +38,7 @@ class PuntoVenta:
 
     @staticmethod
     def get_by_id(id, puntos):
+        debug_print(ARCHIVO, "get_by_id", {"id": id, "puntos": puntos})
         for punto in puntos:
             if (punto.id == id):
                 return punto

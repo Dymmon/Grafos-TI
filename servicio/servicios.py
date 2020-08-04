@@ -31,8 +31,13 @@ def obtener_hoja_de_ruta(json):
         puntos.append(PuntoVenta.from_json(punto))
 
     procesado = Archivo(centros, puntos)
-    procesado.construir_rutas()
+    resultado = procesado.construir_rutas()
 
-    return jsonify({
-        "rutas": Ruta.lista_to_dict(procesado.rutas)
-    })
+    if (isinstance(resultado, str)):
+        return jsonify({
+            "error": resultado
+        })
+    else:
+        return jsonify({
+            "rutas": Ruta.lista_to_dict(resultado.rutas)
+        })

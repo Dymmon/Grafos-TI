@@ -9,4 +9,5 @@ def debug_print(archivo, funcion, extra=""):
     string = fecha_y_hora() + "[" + archivo + ".py] " + funcion + "()"
     print(string)
     print(extra)
+    print("\n")
     return string

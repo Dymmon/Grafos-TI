@@ -12,9 +12,11 @@ class CentroDistribucion:
 
     @staticmethod
     def from_json(json):
+        debug_print(ARCHIVO, "from_json", json)
         return CentroDistribucion(json["id"], (json["coordenadas"]["x"], json["coordenadas"]["y"]))
 
     def to_dict(self):
+        debug_print(ARCHIVO, "to_dict")
         return {
             "id": self.id,
             "esCentroDistribucion": True,
@@ -27,6 +29,7 @@ class CentroDistribucion:
 
     @staticmethod
     def lista_to_dict(centros):
+        debug_print(ARCHIVO, "lista_to_dict", {"centros": centros})
         lista = []
         for centro in centros:
             lista.append(centro.to_dict())
@@ -34,6 +37,7 @@ class CentroDistribucion:
 
     @staticmethod
     def get_by_id(id, centros):
+        debug_print(ARCHIVO, "get_by_id", {"id": id, "centros": centros})
         for centro in centros:
             if (centro.id == id):
                 return centro
