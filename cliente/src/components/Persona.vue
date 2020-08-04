@@ -10,15 +10,6 @@
     >
       <span style="font-size: 16px">{{ nombre }}</span>
     </div>
-    <div class="column is-12" style="display:flex; justify-content: center">
-      <a
-        :href="red.url"
-        :style="`padding: 5px; color: ${red.color}`"
-        v-for="(red, i) in redes"
-        :key="i + nombre"
-        ><v-icon>{{red.icono}}</v-icon
-      ></a>
-    </div>
   </div>
 </template>
 

@@ -11,10 +11,6 @@
       >
       <v-divider></v-divider>
       <v-stepper-step step="2" :complete="pasoActual > 2"
-        >Centros de distribución</v-stepper-step
-      >
-      <v-divider></v-divider>
-      <v-stepper-step step="3" :complete="pasoActual > 3"
         >Puntos de venta</v-stepper-step
       >
     </v-stepper-header>
@@ -26,7 +22,7 @@
               onActualizar(puntos, centros);
             }
           "
-          :onCancelar="onCancelar"
+          :onCancelar="cancelar"
           :onSiguiente="
             () => {
               pasoActual = 2;
@@ -35,30 +31,13 @@
         ></input-archivo>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <centro-distribucion
-          :onCancelar="onCancelar"
-          :onActualizar="() => {}"
-          :centros="centros"
-          :puntos="puntos"
+        <punto-venta
+        :puntos="puntos"
+          :onCancelar="cancelar"
+          :onGuardar="(puntos)=>{onGuardar(puntos)}"
           :onDevolverse="
             () => {
               pasoActual = 1;
-            }
-          "
-          :onSiguiente="
-            () => {
-              pasoActual = 3;
-            }
-          "
-        ></centro-distribucion>
-      </v-stepper-content>
-      <v-stepper-content step="3">
-        <punto-venta
-          :onCancelar="onCancelar"
-          :onGuardar="onGuardar"
-          :onDevolverse="
-            () => {
-              pasoActual = 2;
             }
           "
         ></punto-venta>
@@ -69,48 +48,48 @@
 
 <script>
 import InputArchivo from "./InputArchivo";
-import CentroDistribucion from "./CentroDistribucion";
 import PuntoVenta from "./PuntoVenta";
+import axios from "axios";
 
 export default {
   name: "Stepper",
-  props: ["onFinalizar"],
+  props: ["onFinalizar", "onCancelar"],
   components: {
     InputArchivo,
-    CentroDistribucion,
     PuntoVenta,
   },
   data() {
     return {
       pasoActual: 1,
       puntos: [],
-      centros: [],
-      camiones: [],
+      centros: []
     };
-  },
-  watch: {
-    pasoActual() {
-      console.log("PASO ACTUAL: ", this.pasoActual);
-    },
   },
   mounted() {
     this.pasoActual = 1;
+    this.puntos = [];
+    this.centros = [];
   },
   methods: {
     onActualizar(puntos, centros) {
       this.puntos = puntos;
       this.centros = centros;
     },
-    onActualizarSegundo(puntos, centros, camiones) {
+    onGuardar(puntos) {
       this.puntos = puntos;
-      this.centros = centros;
-      this.camiones = camiones;
+      axios.post(`${this.$apiUrl}/rutas`, {centrosDistribucion: this.centros, puntosVenta: this.puntos})
+      .then(r => {
+        this.onFinalizar(r.data.rutas);
+      })
+      .catch(e => {
+        console.log(e);
+      })
     },
-    onGuardar() {},
-    onCancelar() {
+    cancelar() {
       this.pasoActual = 1;
       this.puntos = [];
       this.centros = [];
+      this.onCancelar();
     },
   },
   computed: {},

@@ -1,32 +1,110 @@
 <template>
   <div class="is-full-h" style="padding: 20px;">
-    <div class="container" style="height: 100%; padding: 40px;">
-      <!-- <p class="title">Universidad Tecnológica Metropolitana</p>
-      <p class="subtitle">INFB8061 - Grafos y Lenguajes Formales</p>
+    <v-card>
+      <div
+        class="container"
+        style="height: calc(100vh - 120px); padding: 40px; overflow-y: scroll"
+      >
+        <p class="title text-center">Trabajo Integral: Hoja de rutas</p>
+        <v-btn
+          rounded
+          color="primary"
+          text
+          outlined
+          @click="modalStepper = true"
+          >Ingresar información</v-btn
+        >
+        <div v-if="rutas != null">
+          <p class="title text-center">Resultado</p>
+          <div v-for="(camion, i) in rutas" :key="i">
+            <p class="title-2">{{ camion.camion }}</p>
+            <p
+              class="subtitle-2 ml-3"
+              v-for="(ruta, j) in camion.ruta"
+              :key="j"
+            >
+              -
+              {{
+                camion.productos == 0
+                  ? `El camión no necesitó salir.`
+                  : `Se dirige a ${
+                      ruta.esCentroDistribucion
+                        ? `CD${ruta.id}(${ruta.coordenadas.x}, ${ruta.coordenadas.y}) y se abastece de ${camion.productos} productos.`
+                        : `PV${ruta.id}(${ruta.coordenadas.x}, ${ruta.coordenadas.y}) y entrega ${ruta.productos} productos.`
+                    }`
+              }}
+            </p>
+          </div>
+        </div>
+        <div v-else>
+        <p class="subtitle-2 text-center">No se ha cargado ningún archivo para calcular.</p>
+        </div>
+      </div>
+      <v-btn
+        absolute
+        dark
+        fab
+        bottom
+        right
+        color="secondary"
+        @click="modalIntegrantes = true"
+      >
+        <v-icon>mdi-account-circle-outline</v-icon>
+      </v-btn>
+    </v-card>
 
-      <div style="display: flex; justify-content: space-between;">
-        <persona
-          v-for="integrante in integrantes"
-          :key="integrante.nombre"
-          :redes="integrante.redes"
-          :nombre="integrante.nombre"
-          :imagen="integrante.imagen"
-        />
-      </div> -->
-    <stepper :onFinalizar="()=>{}"></stepper>
-    </div>
+    <v-dialog v-model="modalIntegrantes">
+      <v-card
+        ><div class="container" style="height: 100%; padding: 40px;">
+          <p class="title">Universidad Tecnológica Metropolitana</p>
+          <p class="subtitle">INFB8061 - Grafos y Lenguajes Formales</p>
+
+          <div style="display: flex; justify-content: space-between;">
+            <persona
+              v-for="integrante in integrantes"
+              :key="integrante.nombre"
+              :redes="integrante.redes"
+              :nombre="integrante.nombre"
+              :imagen="integrante.imagen"
+            />
+          </div></div
+      ></v-card>
+    </v-dialog>
+    <v-dialog v-model="modalStepper">
+      <stepper
+        :onFinalizar="
+          (data) => {
+            guardar(data);
+          }
+        "
+        :onCancelar="
+          () => {
+            modalStepper = false;
+          }
+        "
+      ></stepper>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-// import Persona from "../components/Persona.vue";
+import Persona from "../components/Persona.vue";
 import Stepper from "../components/Stepper.vue";
 export default {
   components: {
-    // Persona,
-    Stepper
+    Persona,
+    Stepper,
+  },
+  methods: {
+    guardar(data) {
+      this.rutas = data;
+      this.modalStepper = false;
+    },
   },
   data: () => ({
+    modalIntegrantes: false,
+    modalStepper: false,
+    rutas: null,
     integrantes: [
       {
         nombre: "Javier Garrido",
@@ -37,9 +115,9 @@ export default {
             nombre: "GitHub",
             url: "https://github.com/Scalim",
             icono: "github-circle",
-            color: "#000"
-          }
-        ]
+            color: "#000",
+          },
+        ],
       },
       {
         nombre: "Mariam Maldonado",
@@ -50,15 +128,15 @@ export default {
             nombre: "GitHub",
             url: "https://github.com/mariam6697",
             icono: "github-circle",
-            color: "#000"
+            color: "#000",
           },
           {
             nombre: "Twitter",
             url: "https://twitter.com/mariam_vmm",
             icono: "twitter",
-            color: "#1da1f2"
-          }
-        ]
+            color: "#1da1f2",
+          },
+        ],
       },
       {
         nombre: "Carlos Montuyao",
@@ -69,9 +147,9 @@ export default {
             nombre: "GitHub",
             url: "https://github.com/Dymmon",
             icono: "github-circle",
-            color: "#000"
-          }
-        ]
+            color: "#000",
+          },
+        ],
       },
       {
         nombre: "Jorge Verdugo",
@@ -82,21 +160,21 @@ export default {
             nombre: "GitHub",
             url: "https://github.com/mapacheverdugo",
             icono: "github-circle",
-            color: "#000"
+            color: "#000",
           },
           {
             nombre: "Instagram",
             url: "http://instagram.com/mapacheverdugo",
             icono: "instagram",
-            color: "#c13584"
+            color: "#c13584",
           },
           {
             nombre: "Twitter",
             url: "https://twitter.com/mapacheverdugo",
             icono: "twitter",
-            color: "#1da1f2"
-          }
-        ]
+            color: "#1da1f2",
+          },
+        ],
       },
       {
         nombre: "Javiera Vergara",
@@ -107,23 +185,23 @@ export default {
             nombre: "GitHub",
             url: "https://github.com/PollitoMayo",
             icono: "github-circle",
-            color: "#000"
+            color: "#000",
           },
           {
             nombre: "Twitter",
             url: "https://twitter.com/pollitomayonesa",
             icono: "twitter",
-            color: "#1da1f2"
+            color: "#1da1f2",
           },
           {
             nombre: "DeviantArt",
             url: "https://www.deviantart.com/pollitomayo",
             icono: "deviantart",
-            color: "#4dc47d"
-          }
-        ]
-      }
-    ]
-  })
+            color: "#4dc47d",
+          },
+        ],
+      },
+    ],
+  }),
 };
 </script>

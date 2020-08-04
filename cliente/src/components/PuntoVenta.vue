@@ -1,34 +1,53 @@
 <template>
-  <div class="fill-height d-flex align-center justify-center">
-    <v-col align="center" justify="space-around" class="fill-height">
-      <h3>Ingresar archivo</h3>
-      <v-file-input
-        v-model="files"
-        color="deep-purple accent-4"
-        placeholder="Seleccionar archivo"
-        prepend-icon="mdi-paperclip"
-        outlined
-        :show-size="1000"
-      >
-      </v-file-input>
+  <v-container>
+    <div class="mx-6">
+      <h3 class="headline mb-8 text-center">Puntos de Venta</h3>
+      <v-row v-for="(punto, i) in puntos" :key="i">
+        <v-col cols="3" class="ma-0 pa-0"
+          ><h3 class="title-2">PV{{ punto.id }}</h3></v-col
+        >
+        <v-col cols="6" class="ma-0 pa-0"
+          ><h3 class="subtitle-1">Cantidad de productos a entregar</h3></v-col
+        >
+        <v-col cols="3" class="ma-0 pa-0">
+          <v-text-field outlined dense v-model="cantidades[i]"></v-text-field>
+        </v-col>
+      </v-row>
       <v-row align="center" justify="space-between">
         <v-btn outlined rounded @click="devolverse">Atrás</v-btn>
-        <v-btn outlined rounded @click="onGuardar">Guardar</v-btn>
+        <v-btn outlined rounded @click="guardar" :disabled="deshabilitado"
+          >Guardar</v-btn
+        >
       </v-row>
-    </v-col>
-  </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: "input-archivo",
-  props: ["onGuardar", "onDevolverse"],
+  props: ["onGuardar", "onDevolverse", "puntos"],
   data() {
     return {
-      files: null,
+      cantidades: [],
+      deshabilitado: true,
     };
   },
+  watch: {
+    cantidades() {
+      if (this.cantidades.length == this.puntos.length) {
+        this.deshabilitado = false;
+      }
+    },
+  },
   methods: {
+    guardar() {
+      var nuevo = this.puntos;
+      for (let index = 0; index < nuevo.length; index++) {
+        nuevo[index].productos = parseInt(this.cantidades[index]);
+      }
+      this.onGuardar(nuevo);
+    },
     devolverse() {
       this.onDevolverse();
     },
