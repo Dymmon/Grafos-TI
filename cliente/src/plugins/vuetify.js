@@ -1,13 +1,14 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import es from "vuetify/es5/locale/es";
-import colors from 'vuetify/lib/util/colors'
 
 Vue.use(Vuetify);
 
 const vuetify = new Vuetify({
   lang: {
-    locales: { es },
+    locales: {
+      es
+    },
     current: "es",
   },
   icons: {
@@ -15,16 +16,10 @@ const vuetify = new Vuetify({
   },
   theme: {
     themes: {
-        light: {
-          primary: colors.purple,
-          secondary: colors.grey.darken1,
-          accent: colors.shades.black,
-          error: colors.red.accent3,
-        },
-        dark: {
-          primary: colors.blue.lighten3,
-        },
+      light: {
+        primary: "#46c292",
       },
+    },
   },
 });
 

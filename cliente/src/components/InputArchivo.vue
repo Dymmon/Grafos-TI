@@ -1,23 +1,27 @@
 <template>
-  <div class="fill-height d-flex align-center justify-center">
-    <v-col align="center" justify="space-around" class="fill-height">
-      <h3>Ingresar archivo</h3>
-      <v-file-input
-        v-model="archivo"
-        color="deep-purple accent-4"
-        placeholder="Seleccionar archivo"
-        prepend-icon="mdi-paperclip"
-        outlined
-        show-size
-        accept=".txt"
+  <v-container>
+    <h3 class="headline mb-8">Ingresar archivo</h3>
+    <v-spacer></v-spacer>
+    <v-file-input
+      v-model="archivo"
+      color="deep-purple accent-4"
+      placeholder="Seleccionar archivo"
+      prepend-icon="mdi-paperclip"
+      outlined
+      show-size
+      accept=".txt"
+    >
+    </v-file-input>
+    <v-divider class="pb-8"></v-divider>
+    <v-row align="center" justify="space-between">
+      <v-btn color="primary" depressed rounded @click="onCancelar"
+        >Cancelar</v-btn
       >
-      </v-file-input>
-      <v-row align="center" justify="space-between">
-        <v-btn outlined rounded @click="onCancelar">Cancelar</v-btn>
-        <v-btn outlined rounded @click="continuar">Siguiente</v-btn>
-      </v-row>
-    </v-col>
-  </div>
+      <v-btn color="primary" depressed rounded @click="continuar"
+        >Siguiente</v-btn
+      >
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -30,8 +34,7 @@ export default {
       archivo: null,
     };
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     continuar() {
       let formData = new FormData();
