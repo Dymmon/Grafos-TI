@@ -45,7 +45,6 @@ export default {
       axios
         .post(`${this.$apiUrl}/resumen`, formData)
         .then((r) => {
-          console.log("DATA: ", r.data);
           this.onActualizar(r.data.puntosVenta, r.data.centrosDistribucion);
           this.onSiguiente();
         })
